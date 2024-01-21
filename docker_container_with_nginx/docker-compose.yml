@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  django_gunicorn:
+    volumes:
+      - static:/app/static_dev
+    build:
+      context: .
+    environment:
+      DEBUG: 0
+      SECRET_KEY: 6a67rstg87fmm4-yrw-tydn=o^*n$k$ju&z09f*kdp#10c)#=d
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static:/app/static
+    ports:
+      - "80:80"
+    depends_on:
+      - django_gunicorn
+
+
+volumes:
+  static:
